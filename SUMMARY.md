@@ -31,3 +31,4 @@
   * [Operators](devops/operators.md)
   * [Istio](devops/istio.md)
   * [Automating Builds with Build Triggers in OpenShift](devops/automating-builds-with-build-triggers-in-openshift.md)
+  * [Introduction to Red Hat OpenShift](devops/introduction-to-red-hat-openshift-1.md)
