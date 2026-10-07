@@ -1,0 +1,652 @@
+# Istio
+
+<figure><img src="../.gitbook/assets/Istio Service Mesh Infographic Guide.png" alt=""><figcaption></figcaption></figure>
+
+## Overview
+
+This document consolidates the supplied **Istio.txt**, **Istio-subtitles-en.vtt**, and **Istio.mp4** into one professional technical reference. It covers service-mesh fundamentals, Istio's four supported concepts, Istio capabilities, the control plane and data plane, Envoy, microservices, traffic management, security, observability, and service communication metrics. The transcript is consolidated once in the body, while the complete timestamped VTT is preserved separately.
+
+## Table of Contents
+
+* [Overview](istio.md#overview)
+* [Source Coverage and Reconciliation](istio.md#source-coverage-and-reconciliation)
+* [Learning Objectives](istio.md#learning-objectives)
+* [Service Mesh](istio.md#service-mesh)
+* [Istio](istio.md#istio)
+* [Four Concepts Supported by Istio](istio.md#four-concepts-supported-by-istio)
+* [Istio Features and Capabilities](istio.md#istio-features-and-capabilities)
+* [Istio Deployment and Extensibility](istio.md#istio-deployment-and-extensibility)
+* [How Istio Works](istio.md#how-istio-works)
+* [Control Plane and Data Plane](istio.md#control-plane-and-data-plane)
+* [Envoy Proxy](istio.md#envoy-proxy)
+* [Microservices](istio.md#microservices)
+* [Microservices Benefits](istio.md#microservices-benefits)
+* [Microservices Challenges](istio.md#microservices-challenges)
+* [Example Microservices Architecture](istio.md#example-microservices-architecture)
+* [Traffic Management](istio.md#traffic-management)
+* [Traffic Shifting](istio.md#traffic-shifting)
+* [A-B Testing and Request Routing](istio.md#a-b-testing-and-request-routing)
+* [Security](istio.md#security)
+* [Observability](istio.md#observability)
+* [Four Basic Service Monitoring Metrics](istio.md#four-basic-service-monitoring-metrics)
+* [End-to-End Conceptual Flow](istio.md#end-to-end-conceptual-flow)
+* [Video Visual Context](istio.md#video-visual-context)
+* [Key Terms / Glossary](istio.md#key-terms--glossary)
+* [Command Reference](istio.md#command-reference)
+* [Source Notes](istio.md#source-notes)
+* [Complete Cleaned Transcript](istio.md#complete-cleaned-transcript)
+* [Complete VTT Transcript with Timestamps](istio.md#complete-vtt-transcript-with-timestamps)
+* [Quality Check](istio.md#quality-check)
+
+## Source Coverage and Reconciliation
+
+| Source                        | Details                                          |
+| ----------------------------- | ------------------------------------------------ |
+| `Istio.txt`                   | Complete continuous transcript; 1 source line(s) |
+| `Istio-subtitles-en.vtt`      | 96 timed subtitle cues                           |
+| `Istio.mp4`                   | Original video inspected for visual context      |
+| TXT/VTT transcript comparison | **Exact match after whitespace normalization**   |
+| Video duration                | **438.57 seconds (\~7.3 minutes)**               |
+
+The TXT and VTT carry the same spoken content. The VTT supplies timing segmentation, so the spoken content is not duplicated in the main body. The VTT timing is retained in its own appendix.
+
+## Learning Objectives
+
+After watching this video, the learner will be able to:
+
+1. Describe a **service mesh**.
+2. Identify the **four concepts that Istio supports**.
+3. Describe the **benefits and challenges of using Istio with microservices**.
+4. Identify the **four basic communication service-monitoring metrics**.
+
+## Service Mesh
+
+A **service mesh** is a dedicated layer for making **service-to-service communication secure and reliable**.
+
+The lesson identifies these capabilities:
+
+| Capability         | Source description                                                  |
+| ------------------ | ------------------------------------------------------------------- |
+| Traffic management | Controls the flow of traffic between services                       |
+| Security           | Encrypts traffic between services                                   |
+| Observability      | Observes service behavior to troubleshoot and optimize applications |
+
+The source also describes the service-mesh term as software that creates a security or network domain with a pattern for achieving these capabilities.
+
+### Service Mesh Conceptual Model
+
+```
+Service A  ←──── secure / controlled communication ────→  Service B
+                          │
+                    Service Mesh
+              ┌───────────┼───────────┐
+              ↓           ↓           ↓
+           Traffic     Security   Observability
+          management
+```
+
+## Istio
+
+**Istio** is a **platform-independent service mesh often used on Kubernetes**.
+
+The lesson introduces Istio through four concepts:
+
+```
+Connection
+Security
+Enforcement
+Observability
+```
+
+The source also describes Istio as providing control by enforcing policies across an entire fleet.
+
+## Four Concepts Supported by Istio
+
+### Connection
+
+Connection enables Istio to intelligently control traffic between services in:
+
+* Canary deployments.
+* A-B tests.
+* Other deployment models.
+
+### Security
+
+Istio secures services through:
+
+* Authentication.
+* Authorization.
+* Encryption.
+
+### Enforcement
+
+The source says Istio provides enforceability and control by enforcing policies across an entire fleet.
+
+### Observability
+
+Istio allows users to:
+
+* Observe traffic flow in the mesh.
+* Trace call flows.
+* Trace dependencies.
+* View metrics such as latency.
+* View metrics such as errors.
+
+These capabilities help troubleshoot and optimize applications.
+
+### Four-Concept Memory Cue
+
+```
+C → Connection
+S → Security
+E → Enforcement
+O → Observability
+```
+
+> **Note:** In the detailed narration, the third idea is described with the word **“enforceability”**; the recap names it **“enforcement.”** Both forms are retained and flagged in [Source Notes](istio.md#source-notes).
+
+## Istio Features and Capabilities
+
+### Transport-Layer Security (TLS)
+
+Istio provides:
+
+* Transport-layer security (TLS).
+* Encrypted communication between services in a cluster.
+* Authentication.
+* Authorization.
+
+### Load Balancing
+
+Istio load balances traffic for these protocols:
+
+```
+HTTP
+TCP
+gRPC
+WebSocket
+```
+
+### Routing Rules
+
+Istio supports granular configuration of traffic flow, known as **routing rules**.
+
+### Retries, Fault Injection, and Failover
+
+Istio supports control through:
+
+* Continuous retries.
+* Fault injection methods.
+* Automatic failovers.
+
+### Policies and APIs
+
+Istio provides policy and API support for:
+
+* Access controls.
+* Rate limits.
+* Quotas.
+
+### Monitoring, Logging, and Tracking
+
+Istio provides automatic:
+
+* Monitoring.
+* Logging.
+* Tracking.
+
+The source explicitly applies this to:
+
+* Inbound traffic.
+* Outbound traffic.
+
+## Istio Deployment and Extensibility
+
+Istio is described as **extensible** and able to handle a diverse range of deployment needs.
+
+It runs on Kubernetes and can:
+
+1. Add applications in a cluster to the mesh.
+2. Extend the mesh to additional clusters.
+3. Connect to virtual machines.
+4. Connect to other endpoints running outside Kubernetes.
+
+```
+Kubernetes
+   ├── Applications added to mesh
+   ├── Additional clusters
+   ├── Virtual machines
+   └── Other external endpoints
+```
+
+## How Istio Works
+
+The lesson explains Istio in the context of microservices.
+
+There are two main components:
+
+```
+Control Plane
+Data Plane
+```
+
+Communication between services is handled by the **data plane**.
+
+Without a service mesh, the network cannot identify:
+
+* The type of traffic that flows.
+* The source.
+* The destination.
+
+Because of this, it cannot make the necessary decisions described by the lesson.
+
+## Control Plane and Data Plane
+
+### Data Plane
+
+The data plane handles communication between services.
+
+### Control Plane
+
+The control plane:
+
+1. Takes the desired configuration.
+2. Uses its view of the services.
+3. Dynamically programs proxy servers.
+4. Updates proxy servers as the environment changes.
+
+### Architecture
+
+```
+                   Desired configuration
+                            │
+                            ▼
+                    Istio control plane
+                            │
+                  program / update proxies
+                            │
+             ┌──────────────┴──────────────┐
+             ▼                             ▼
+        Envoy proxy                    Envoy proxy
+             │                             │
+         Service A   ← service traffic →  Service B
+             │                             │
+             └──────────── metrics ────────┘
+```
+
+### Video Architecture Visual
+
+_Caption: The video shows Service A and Service B, each associated with an Envoy proxy, with the Istio control plane supplying discovery/configuration/certificates and receiving metrics. Source: video, approximately 03:20._
+
+## Envoy Proxy
+
+All network traffic is described by the source as being subject to, or intercepted by, a proxy called **Envoy**.
+
+Envoy:
+
+* Is used by the service mesh.
+* Intercepts network traffic.
+* Enables many features depending on its configuration.
+
+## Microservices
+
+A cornerstone of cloud-native development is **microservices architecture**.
+
+Microservices are described as a cloud-native architectural approach in which:
+
+* A single application contains many smaller components or services.
+* The components are loosely coupled.
+* The components are independently deployable.
+* The services have well-defined APIs for communicating with each other.
+
+### Example Microservices Flow
+
+```
+UI
+ ↓
+Ordering microservice
+ ↓
+Inventory microservice
+ ↓
+Database
+```
+
+## Microservices Benefits
+
+### Easy Code Updates
+
+Only the relevant service needs to be updated instead of the entire application.
+
+### Different Technology Stacks
+
+Teams can use different technology stacks for each component.
+
+### Independent Scaling
+
+Components can be scaled independently instead of scaling the entire application.
+
+## Microservices Challenges
+
+### Traffic Encryption
+
+Traffic must be encrypted to ensure secure communication.
+
+### Canary Deployments
+
+Teams may want to roll out new features to a subset of users.
+
+### A-B Testing
+
+Teams may want to compare two versions of a feature to determine which engages users the most.
+
+### Cascading Failures
+
+Communication between microservices can lead to cascading failures if one service is:
+
+* Unreachable.
+* Particularly slow.
+
+### Retries and Circuit-Breaking
+
+Developers need:
+
+* Retries.
+* Circuit-breaking.
+
+These help prevent errors in one microservice from cascading to others.
+
+## Example Microservices Architecture
+
+The source presents an application in which:
+
+* The UI talks to the ordering microservice.
+* The ordering microservice interacts with the inventory microservice.
+* The inventory microservice talks to a database.
+
+Service-to-service communication enables microservice architecture, but as that communication becomes more complex, a service mesh can help improve it.
+
+### Video Microservices Visual
+
+_Caption: The video shows the UI → Ordering → Inventory → database service chain used to explain microservices. Source: video, approximately 04:10._
+
+## Traffic Management
+
+Istio can perform **traffic shifting** by gradually migrating traffic from one version of a microservice to another.
+
+The lesson also describes **request routing** for A-B testing.
+
+Istio traffic-management capabilities named in the lesson include:
+
+| Capability         | Source detail                                           |
+| ------------------ | ------------------------------------------------------- |
+| Traffic shifting   | Gradually migrate traffic between microservice versions |
+| Request routing    | Direct particular versions to selected users            |
+| Canary deployments | Send a subset of traffic to a new version               |
+| A-B testing        | Compare versions/features                               |
+| Routing rules      | Granular traffic-flow configuration                     |
+| Retries            | Continuous retry behavior                               |
+| Fault injection    | Fault-testing/control method                            |
+| Automatic failover | Automatic failover behavior                             |
+| Load balancing     | Balance HTTP, TCP, gRPC, and WebSocket traffic          |
+
+## Traffic Shifting
+
+The lesson gives a concrete progression for a new ordering-service version.
+
+Initial step:
+
+```
+Ordering v1 = 95%
+Ordering v2 = 5%
+```
+
+Later:
+
+```
+Ordering v1 = 50%
+Ordering v2 = 50%
+```
+
+Finally:
+
+```
+Ordering v2 = 100%
+```
+
+The purpose is to gradually migrate traffic to the new version.
+
+### Video Traffic-Shifting Visual
+
+_Caption: The video visualizes UI traffic being split between Ordering v1 and Ordering v2 before continuing to Inventory; the source uses this to illustrate traffic management. Source: video, approximately 05:25._
+
+## A-B Testing and Request Routing
+
+Istio request routing allows a particular version of a microservice to be directed to a subset of users while the original version is sent to remaining users.
+
+This process helps determine whether the new version improves:
+
+* User engagement.
+* Performance.
+
+## Security
+
+Istio provides security measures for microservices, including encryption.
+
+### Encryption
+
+Istio defends against **man-in-the-middle attacks** by encrypting traffic between microservices.
+
+### Service Access Control
+
+Istio makes it easier to implement policies for service access control so that services can only communicate with the other required services.
+
+### Example
+
+The lesson states that, in its example:
+
+* The UI service would be unable to directly communicate with the inventory service, even if it tried.
+
+This demonstrates service-level access control.
+
+### Video Security Visual
+
+_Caption: The video shows the UI → Ordering v1 → Inventory path used to illustrate the security discussion. Source: video, approximately 05:50._
+
+## Observability
+
+The lesson identifies observability as one of Istio's four concepts.
+
+Using Istio, users can:
+
+* Observe traffic flow in the mesh.
+* Trace call flows.
+* Trace dependencies.
+* View service metrics.
+* Use monitoring, logging, and tracking.
+
+Istio automatically monitors, logs, and tracks:
+
+* Inbound traffic.
+* Outbound traffic.
+
+### Video Observability Visual
+
+_Caption: The video shows the service chain used to introduce the observability discussion. Source: video, approximately 06:15._
+
+## Four Basic Service Monitoring Metrics
+
+The four basic service-monitoring needs are:
+
+| Metric         | Source purpose/detail                                                        |
+| -------------- | ---------------------------------------------------------------------------- |
+| **Latency**    | Measures timing; used to understand response/request behavior                |
+| **Traffic**    | Shows how much traffic requests are receiving; request counts are an example |
+| **Errors**     | One of the four basic monitoring needs; supports identification of errors    |
+| **Saturation** | One of the four basic monitoring needs                                       |
+
+### Request Counts
+
+Istio provides metrics on **request counts**.
+
+These help show how much traffic the requests are receiving.
+
+### Request Duration
+
+Istio provides **request duration**.
+
+The lesson displays request duration in:
+
+```
+seconds
+```
+
+Request-duration metrics help:
+
+* Find bottlenecks.
+* Ensure prompt responses.
+
+### Metrics Memory Cue
+
+```
+L → Latency
+T → Traffic
+E → Errors
+S → Saturation
+```
+
+## End-to-End Conceptual Flow
+
+The lesson can be connected as:
+
+```
+Microservices
+      ↓
+Complex service-to-service communication
+      ↓
+Need secure and reliable communication
+      ↓
+Service mesh
+      ↓
+Istio
+      ├── Connection / traffic management
+      ├── Security
+      ├── Enforcement
+      └── Observability
+```
+
+Internally:
+
+```
+Desired configuration
+        ↓
+Istio control plane
+        ↓
+Envoy proxies
+        ↓
+Service-to-service traffic
+        ↓
+Data plane
+        ↓
+Metrics / observability
+```
+
+## Video Visual Context
+
+The original video was inspected for visual material that adds structure to the spoken lesson.
+
+### Learning Objectives Slide
+
+_Caption: The opening slide presents the four learning objectives: describe a service mesh; identify Istio's four concepts; describe microservices benefits/challenges; and identify four basic communication service-monitoring metrics. Source: video, approximately 00:25._
+
+### Service Mesh Slide
+
+_Caption: The video defines a service mesh as a dedicated infrastructure layer for secure and reliable service-to-service communication and visually highlights traffic management, security, and observability. Source: video, approximately 00:50._
+
+### Istio Four-Concept Slide
+
+_Caption: The slide introduces Istio and lays out the four concept areas used by the lesson. Source: video, approximately 01:15._
+
+### Features Slide
+
+_Caption: The video feature slide visually connects Istio with TLS-encrypted service communication, load balancing for different protocols, and granular configuration of traffic flow through routing rules and control. Source: video, approximately 02:05._
+
+## Key Terms / Glossary
+
+| Term                               | Source definition / meaning                                                                    |
+| ---------------------------------- | ---------------------------------------------------------------------------------------------- |
+| **Service mesh**                   | Dedicated layer for secure and reliable service-to-service communication                       |
+| **Istio**                          | Platform-independent service mesh often used on Kubernetes                                     |
+| **Connection**                     | Intelligent control of service-to-service traffic                                              |
+| **Security**                       | Authentication, authorization, and encryption                                                  |
+| **Enforcement / enforceability**   | Policy enforcement and control across an entire fleet                                          |
+| **Observability**                  | Observing traffic/service behavior to troubleshoot and optimize applications                   |
+| **Traffic management**             | Control of traffic flow between services                                                       |
+| **Routing rules**                  | Granular traffic-flow configuration                                                            |
+| **Traffic shifting**               | Gradual migration of traffic from one version to another                                       |
+| **Canary deployment**              | Deployment model that sends traffic to a subset of a new version                               |
+| **A-B testing**                    | Comparing feature/service versions with different user groups                                  |
+| **Envoy**                          | Proxy used by the service mesh to intercept network traffic                                    |
+| **Control plane**                  | Istio component that programs and updates proxies from desired configuration and service state |
+| **Data plane**                     | Istio plane responsible for service-to-service communication                                   |
+| **Microservices**                  | Loosely coupled, independently deployable smaller services in a cloud-native application       |
+| **Circuit-breaking**               | Mechanism named by the source to prevent cascading failures                                    |
+| **Fault injection**                | Traffic/control feature named by the source                                                    |
+| **Failover**                       | Automatic failover capability named by the source                                              |
+| **Latency**                        | One of the four basic service-monitoring needs                                                 |
+| **Traffic**                        | One of the four basic service-monitoring needs                                                 |
+| **Errors**                         | One of the four basic service-monitoring needs                                                 |
+| **Saturation**                     | One of the four basic service-monitoring needs                                                 |
+| **Request count**                  | Metric used to show how much traffic requests receive                                          |
+| **Request duration**               | Metric shown in seconds and used to find bottlenecks and ensure prompt responses               |
+| **Transport-layer security (TLS)** | Encrypted communication mechanism described by the source                                      |
+| **Authentication**                 | Istio security capability                                                                      |
+| **Authorization**                  | Istio security capability                                                                      |
+| **Access controls**                | Policy capability for controlling service access                                               |
+| **Rate limits**                    | Policy capability named by the source                                                          |
+| **Quotas**                         | Policy capability named by the source                                                          |
+
+## Command Reference
+
+The supplied Istio lesson contains **no executable commands or complete CLI examples**.
+
+It mentions technologies/components such as:
+
+```
+Kubernetes
+Envoy
+```
+
+but these are not command examples.
+
+> **Note:** No command syntax, flags, or configuration examples have been invented.
+
+### Third Istio Concept
+
+> ⚠️ **Unclear in source:** The detailed narration says Istio “provides enforceability,” while the recap names the concept “enforcement.” The lesson is internally consistent about the underlying idea—policy enforcement/control—but the exact label varies.
+
+### Service-Mesh Definition
+
+The lesson first lists three core service-mesh capabilities—traffic management, security, and observability—then describes four Istio concepts by adding connection and enforcement to the model. Both sets are preserved because they occur explicitly in the source.
+
+### Metrics
+
+The source explicitly names four basic monitoring needs:
+
+```
+Latency
+Traffic
+Errors
+Saturation
+```
+
+It additionally discusses request counts and request duration, with duration shown in seconds.
+
+### Traffic-Shifting Values
+
+The source gives the exact progression:
+
+```
+5% → 50% → 100%
+```
+
+for increasing traffic to the updated microservice version.

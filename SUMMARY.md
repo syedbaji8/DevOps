@@ -29,3 +29,4 @@
   * [Introduction to Red Hat OpenShift](devops/introduction-to-red-hat-openshift.md)
   * [Builds](devops/builds.md)
   * [Operators](devops/operators.md)
+  * [Istio](devops/istio.md)
