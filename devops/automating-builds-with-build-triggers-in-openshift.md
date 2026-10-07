@@ -1,76 +1,118 @@
 # Automating Builds with Build Triggers in OpenShift
 
-## Overview
+### Objectives
 
-Build triggers start OpenShift builds when defined events occur. They remove manual build starts and help keep application images current.
+After completing this reading, you will be able to:
 
-## Learning objectives
+* Understand the concept and importance of build triggers in OpenShift.
+* Identify and describe the different types of build triggers available in OpenShift.
+* Explain how webhook triggers work and their key features.
+* Describe the process and benefits of image change triggers.
+* Understand the functionality and advantages of configuration change triggers.
 
-After completing this lesson, you can:
+#### Introduction to Build Triggers
 
-1. Explain the purpose of build triggers.
-2. Identify webhook, image change, and configuration change triggers.
-3. Describe the event that starts each trigger type.
+In OpenShift, build triggers are essential for automating the build process, ensuring that applications are continuously updated and built efficiently. This reading will explore the different types of build triggers available in OpenShift, explaining each trigger in detail and how they contribute to a streamlined build process.
 
-## Build triggers
+#### Understanding Build Triggers
 
-A build trigger automatically starts a build when an event occurs. Configure triggers in a `BuildConfig` to automate builds from source updates, image updates, or configuration changes.
+Build triggers in OpenShift are mechanisms that automatically initiate a build process based on specific events or conditions. By using these triggers, developers can automate and simplify the process of updating and deploying applications, leading to faster development cycles and reduced manual intervention.
 
-| Trigger              | Event                                         | Result                                  |
-| -------------------- | --------------------------------------------- | --------------------------------------- |
-| Webhook              | An external service sends an HTTP request     | Starts a build                          |
-| Image change         | A new version of a watched image is available | Rebuilds with the updated image         |
-| Configuration change | A `BuildConfig` is created or changed         | Starts a build using that configuration |
+#### Types of Build Triggers
 
-## Webhook triggers
+OpenShift offers several types of build triggers, each designed to respond to different events or changes in your environment. The main types of build triggers are:
 
-A webhook trigger exposes an OpenShift endpoint that accepts HTTP `POST` requests. Source-control services can call this endpoint after repository events, such as a commit or pull request.
+1. **Webhook Triggers**
+2. **Image Change Triggers**
+3. **Configuration Change Triggers**
 
-OpenShift supports generic and GitHub webhook triggers. Use a webhook trigger when your build should respond to an external event.
+### Let's delve into each type in detail:
 
-![Webhook trigger workflow](https://d3c33hcgiwev3.cloudfront.net/imageAssetProxy.v1/_a52f6888cac84f929bce96017e600822_Workflow-Trigger.png?expiry=1791456228218\&hmac=cnasvFCdA4e3OZ2uMflnkL5FEj0INITbVQQXqirHI0c)
+#### 1. Webhook Triggers
 
-### Workflow
+**Webhook triggers** are a powerful feature that allows builds to be initiated via HTTP requests. These triggers are commonly used to integrate with external systems, such as GitHub, to automate builds based on specific repository events.
 
-1. A developer pushes code to a repository.
-2. The repository sends a `POST` request to the webhook endpoint.
-3. OpenShift receives the request and starts a build.
-4. The build produces an updated application image.
+**How Webhook Triggers Work**
 
-## Image change triggers
+When a webhook trigger is configured, it sets up an endpoint in OpenShift that listens for HTTP POST requests. For instance, GitHub can be configured to send a request to this endpoint whenever a new commit is pushed to a repository, a pull request is merged, or other specified events occur. This request triggers the build process in OpenShift, ensuring that the latest code changes are automatically built and deployed.
 
-An image change trigger starts a build when a new version of a watched container image becomes available. Use it when a build depends on a base or builder image.
+**Key Features**
 
-For example, an application using a Node.js builder image can rebuild after a new image version includes security fixes. The resulting application image then includes the updated base image.
+* **Integration with Git Repositories**: Supports triggers from popular repositories like GitHub, GitLab, and Bitbucket.
+* **Event-Driven**: Initiates builds based on various events such as commits, merges, or tag creations.
+* **Flexibility**: Supports both generic and GitHub-specific webhooks, making it versatile for different use cases.
 
-![Image change trigger workflow](https://d3c33hcgiwev3.cloudfront.net/imageAssetProxy.v1/_67b270f358f340bd81655a595e06a61a_Image-Change-Triggers.png?expiry=1791456228218\&hmac=yRPoN573LBnjmfPtgzlVbUa4-jNQXNIAtB7Fuk_fFSc)
+**Example Workflow**
 
-### Workflow
+Below is a basic workflow diagram illustrating how a GitHub webhook trigger operates:
 
-1. A new base-image version is pushed to a registry.
-2. The image change trigger detects the new version.
-3. OpenShift starts a build with the updated image.
-4. The build produces an updated application image.
+<figure><img src="https://d3c33hcgiwev3.cloudfront.net/imageAssetProxy.v1/_a52f6888cac84f929bce96017e600822_Workflow-Trigger.png?expiry=1791456228218&#x26;hmac=cnasvFCdA4e3OZ2uMflnkL5FEj0INITbVQQXqirHI0c" alt=""><figcaption></figcaption></figure>
 
-## Configuration change triggers
+**Workflow Explanation**:
 
-A configuration change trigger starts a build when a `BuildConfig` is created or updated. It ensures the build reflects changes to its configuration.
+1. A developer pushes new code to the GitHub repository.
+2. GitHub sends a POST request to the OpenShift webhook endpoint.
+3. The webhook triggers a new build in OpenShift.
+4. OpenShift builds the application and updates the deployment.
 
-Configuration changes can include the source repository, build strategy, or output destination. Use this trigger when configuration updates should take effect immediately.
+#### 2. Image Change Triggers
 
-![Configuration change trigger workflow](https://d3c33hcgiwev3.cloudfront.net/imageAssetProxy.v1/_33aece26af254a04b392537bfe416093_Configuration-Change-Triggers.png?expiry=1791456228218\&hmac=yHj58tX8myEuAuSXtzKKXBj0jA13DR75WgvKw_uhq6Q)
+**Image change triggers** automatically initiate builds when a new version of a container image becomes available. This type of trigger is particularly useful for maintaining up-to-date applications with the latest dependencies or security patches.
 
-### Workflow
+**How Image Change Triggers Work**
 
-1. A `BuildConfig` is created or updated.
+When an image change trigger is set up, it monitors a specified container image for updates. For example, if your application relies on a Node.js base image, an image change trigger can be configured to detect updates to this base image. When a new version of the image is available, the trigger initiates a build process to incorporate the updated image into your application.
+
+**Key Features**
+
+* **Automated Dependency Management**: Ensures that applications are automatically rebuilt with the latest base images or libraries.
+* **Security and Maintenance**: Helps in quickly responding to security vulnerabilities by initiating builds with updated base images.
+* **Continuous Updates**: Keeps applications up-to-date with the latest changes in dependent images.
+
+**Example Workflow**
+
+Here is a simple workflow diagram illustrating how an image change trigger functions:
+
+<figure><img src="https://d3c33hcgiwev3.cloudfront.net/imageAssetProxy.v1/_67b270f358f340bd81655a595e06a61a_Image-Change-Triggers.png?expiry=1791456228218&#x26;hmac=yRPoN573LBnjmfPtgzlVbUa4-jNQXNIAtB7Fuk_fFSc" alt=""><figcaption></figcaption></figure>
+
+**Workflow Explanation**:
+
+1. A new version of the base image (e.g., Node.js) is pushed to the image registry.
+2. The image change trigger detects the update.
+3. OpenShift initiates a new build process using the updated base image.
+4. The application is rebuilt and redeployed with the latest image.
+
+#### 3. Configuration Change Triggers
+
+**Configuration change triggers** initiate builds when a new BuildConfig resource is created or an existing one is modified. These triggers allows builds to automatically reflect changes in the build configuration, such as updates to source code repositories or changes in build strategies.
+
+**How Configuration Change Triggers Work**
+
+Configuration change triggers monitor the BuildConfig resources in OpenShift. Whenever a new BuildConfig is created or an existing one is updated, the trigger automatically starts a new build. The triggers ensure that any changes in the build configuration are immediately applied to the application, keeping it in sync with the latest configuration settings.
+
+**Key Features**
+
+* **Automatic Build Updates**: Ensures builds reflect the latest configuration changes without manual intervention.
+* **Simplified Configuration Management**: Helps in managing and applying build configurations efficiently.
+* **Flexibility**: Allows for a wide range of configuration changes to trigger builds, such as updates to source repositories, build strategies, or output settings.
+
+**Example Workflow**
+
+Below is a basic workflow diagram showing how a configuration change trigger operates:
+
+<figure><img src="https://d3c33hcgiwev3.cloudfront.net/imageAssetProxy.v1/_33aece26af254a04b392537bfe416093_Configuration-Change-Triggers.png?expiry=1791456228218&#x26;hmac=yHj58tX8myEuAuSXtzKKXBj0jA13DR75WgvKw_uhq6Q" alt=""><figcaption></figcaption></figure>
+
+**Workflow Explanation**:
+
+1. A new BuildConfig resource is created or an existing one is updated.
 2. The configuration change trigger detects the change.
-3. OpenShift starts a build using the updated configuration.
-4. The build produces an updated application image.
+3. OpenShift initiates a new build process based on the updated BuildConfig.
+4. The application is rebuilt and redeployed with the new configuration.
 
-## Summary
+#### Conclusion
 
-Use build triggers to automate builds around the events that matter:
+Build triggers in OpenShift provide a robust mechanism for automating the build and deployment process. By using webhook, image change, and configuration change triggers, you can ensure that your applications are continuously built and updated based on the latest changes and events. This automation leads to more efficient development cycles, quicker response times to updates or issues, and reduced manual overhead. Thus, ultimately contributing to a more streamlined and reliable development workflow.
 
-* **Webhook triggers** respond to external HTTP requests.
-* **Image change triggers** respond to new container image versions.
-* **Configuration change triggers** respond to `BuildConfig` changes.
+#### Author:
+
+Rajashree Patil
