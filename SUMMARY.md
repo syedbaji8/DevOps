@@ -32,3 +32,4 @@
   * [Istio](devops/istio.md)
   * [Automating Builds with Build Triggers in OpenShift](devops/automating-builds-with-build-triggers-in-openshift.md)
   * [Lab5: Introduction to Red Hat OpenShift](devops/lab5-introduction-to-red-hat-openshift.md)
+  * [Lab6 - Understanding ConfigMaps, DaemonSets, Kubernetes Services, Secrets & Persistent Volume Claims](devops/lab6-understanding-configmaps-daemonsets-kubernetes-services-secrets-and-persistent-volume-claims.md)
